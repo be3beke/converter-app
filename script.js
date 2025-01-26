@@ -16,7 +16,7 @@ document.getElementById('convertBtn').addEventListener('click', async () => {
   formData.append('file', file);
 
   try {
-    const response = await fetch(`http://localhost:5000/convert/${conversionType}`, {
+    const response = await fetch(`https://converter-app-8kh1.onrender.com/convert/${conversionType}`, {
       method: 'POST',
       body: formData,
     });
