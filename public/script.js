@@ -1,17 +1,6 @@
-const express = require('express');
-const path = require('path');
-const app = express();
-const PORT = process.env.PORT || 5000;
+console.log('Hello from script.js!');
 
-// Serve static files from the "public" directory
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Root route to serve index.html
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on https://converter-app-1.onrender.com`);
+// Example: Add interactivity to the page
+document.querySelector('h1').addEventListener('click', () => {
+  alert('You clicked the heading!');
 });
