@@ -26,7 +26,19 @@ document.getElementById('convertBtn').addEventListener('click', async () => {
       alert(errorData.error || 'Conversion failed');
       return;
     }
+const puppeteer = require('puppeteer-core');
 
+async function createPdf(text) {
+  const browser = await puppeteer.launch({
+    executablePath: '/usr/bin/chromium-browser', // Path to Chromium on Linux
+    args: ['--no-sandbox', '--disable-setuid-sandbox'], // Required for Linux
+  });
+  const page = await browser.newPage();
+  await page.setContent(`<pre>${text}</pre>`);
+  const pdfBuffer = await page.pdf({ format: 'A4' });
+  await browser.close();
+  return pdfBuffer;
+}
     const blob = await response.blob();
     const downloadUrl = URL.createObjectURL(blob);
     const downloadLink = document.getElementById('downloadLink');
