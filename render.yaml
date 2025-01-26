@@ -1,5 +1,0 @@
-services:
-  - type: web
-    name: converter-app
-    buildCommand: npm install
-    startCommand: npm start
