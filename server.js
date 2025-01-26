@@ -1,33 +1,45 @@
 const express = require('express');
-const puppeteer = require('puppeteer-core'); // Use puppeteer-core
+const { PDFDocument, StandardFonts, rgb } = require('pdf-lib');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Middleware to parse JSON and form data
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Endpoint to create PDF using puppeteer-core
-app.post('/create-pdf/puppeteer', async (req, res) => {
+// Root route
+app.get('/', (req, res) => {
+  res.send('Welcome to the PDF Converter App!');
+});
+
+// Route to create PDF using pdf-lib
+app.post('/create-pdf/pdf-lib', async (req, res) => {
   try {
     const { text } = req.body;
 
-    const browser = await puppeteer.launch({
-      executablePath: '/usr/bin/chromium-browser', // Path to Chromium on Linux
-      args: ['--no-sandbox', '--disable-setuid-sandbox'], // Required for Linux
-    });
-    const page = await browser.newPage();
-    await page.setContent(`<pre>${text}</pre>`);
-    const pdfBuffer = await page.pdf({ format: 'A4' });
-    await browser.close();
+    const pdfDoc = await PDFDocument.create();
+    const page = pdfDoc.addPage();
+    const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
+    page.drawText(text, {
+      x: 50,
+      y: page.getHeight() - 50,
+      size: 12,
+      font: font,
+      color: rgb(0, 0, 0),
+    });
+
+    const pdfBytes = await pdfDoc.save();
     res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'attachment; filename=output-puppeteer.pdf');
-    res.send(pdfBuffer);
+    res.setHeader('Content-Disposition', 'attachment; filename=output-pdf-lib.pdf');
+    res.send(pdfBytes);
   } catch (error) {
-    console.error('Error creating PDF with puppeteer:', error);
+    console.error('Error creating PDF with pdf-lib:', error);
     res.status(500).send('Error creating PDF');
   }
 });
 
+// Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
