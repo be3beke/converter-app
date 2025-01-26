@@ -7,6 +7,7 @@ const { PDFDocument } = require('pdf-lib');
 const mammoth = require('mammoth');
 const xlsx = require('xlsx');
 const poppler = require('pdf-poppler');
+const puppeteer = require('puppeteer');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -117,6 +118,18 @@ app.post('/convert/pdf-to-image', upload.single('file'), async (req, res) => {
     res.status(500).json({ error: 'Conversion failed' });
   }
 });
+
+async function createPdf(text) {
+  const browser = await puppeteer.launch({
+    executablePath: '/usr/bin/chromium-browser', // Path to Chromium on Linux
+    args: ['--no-sandbox', '--disable-setuid-sandbox'], // Required for Linux
+  });
+  const page = await browser.newPage();
+  await page.setContent(`<pre>${text}</pre>`);
+  const pdfBuffer = await page.pdf({ format: 'A4' });
+  await browser.close();
+  return pdfBuffer;
+}
 
 // Convert Word (DOCX) to PDF
 app.post('/convert/word-to-pdf', upload.single('file'), async (req, res) => {
