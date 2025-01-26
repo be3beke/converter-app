@@ -7,7 +7,7 @@
         "start": "node server.js"
     },
     "engines": {
-        "node": "18.x",
+        "node": "22.13.1",
         "npm": "9.x"
     },
     "dependencies": {
