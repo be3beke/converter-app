@@ -6,7 +6,6 @@ const path = require('path');
 const { PDFDocument } = require('pdf-lib');
 const mammoth = require('mammoth');
 const xlsx = require('xlsx');
-const textToPdf = require('text-to-pdf');
 const poppler = require('pdf-poppler');
 
 const app = express();
