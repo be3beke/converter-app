@@ -9,7 +9,6 @@ const xlsx = require('xlsx');
 const poppler = require('pdf-poppler');
 const app = express();
 const PORT = process.env.PORT || 5000;
-const express = require('express');
 const puppeteer = require('puppeteer-core'); // Use puppeteer-core
 
 app.use(express.json());
