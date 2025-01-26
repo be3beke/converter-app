@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Converter</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>File Converter</h1>
+    <p>Convert files effortlessly between PDF, Word, Excel, TXT, PNG, and JPG.</p>
+
+    <div class="upload-section">
+      <input type="file" id="fileInput" accept=".pdf,.docx,.xlsx,.txt,.png,.jpg">
+      <button id="uploadBtn">Upload File</button>
+    </div>
+    <div class="conversion-options">
+      <label for="conversionType">Convert to:</label>
+      <select id="conversionType">
+        <option value="pdf-to-word">PDF to Word</option>
+        <option value="pdf-to-excel">PDF to Excel</option>
+        <option value="pdf-to-txt">PDF to TXT</option>
+        <option value="pdf-to-png">PDF to PNG</option>
+        <option value="pdf-to-jpg">PDF to JPG</option>
+        <option value="word-to-pdf">Word to PDF</option>
+        <option value="excel-to-pdf">Excel to PDF</option>
+        <option value="txt-to-pdf">TXT to PDF</option>
+        <option value="png-to-pdf">PNG to PDF</option>
+        <option value="jpg-to-pdf">JPG to PDF</option>
+      </select>
+      <button id="convertBtn">Convert</button>
+    </div>
+
+    <div class="download-section">
+      <a id="downloadLink" style="display: none;">Download Converted File</a>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
